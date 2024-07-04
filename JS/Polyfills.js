@@ -1,7 +1,7 @@
 //Polyfill of call
 Function.prototype.myCall = function (scope, ...args) {
   //this line spread will be not there for apply
-  scope._this = this;
+  scope._this = this; // this keyword holds the currently executing function
   return scope._this(...args);
 };
 
@@ -76,44 +76,51 @@ Array.prototype.myFlat = function (depth = 1) {
   let flattened = [];
   for (let i = 0; i < this.length; i++) {
     if (Array.isArray(this[i]) && depth > 0) {
-      flattened = flattened.concat(this[i].myFlat(depth-1));
+      flattened = flattened.concat(this[i].myFlat(depth - 1));
     } else flattened.push(this[i]);
   }
   return flattened;
 };
-const res=arr.myFlat(4) //works with shallow cpy won't modify original arr
+const res = arr.myFlat(4); //works with shallow cpy won't modify original arr
 
 //Infinite currying
-const sum2 = function(a){
-    return function(b){
-        if(b){
-            return sum(a+b);
-        }
-        return a;
+function sum(a) {
+  // The inner function that continues currying
+  function curriedSum(b) {
+    // If no argument is provided, return the accumulated sum
+    if (b === undefined) {
+      return a;
     }
+    // Otherwise, add the current argument to the accumulated sum
+    a += b;
+    return curriedSum;
   }
-  console.log(sum2(1)(2)(3)(4)(20)(50)());
+  return curriedSum;
+}
 
-  //Memoize
-  const memoize = (fn) => {
-    let cache = {};
-  
-    return function (n) {
-      if (cache[n]) {// '', undefined, false, 0
-        return cache[n];
-      } else {
-        const result = fn(n);
-        cache[n] = result;
-        return result;
-      }
-    };
+// Usage
+console.log(sum(1)(2)(3)(4)()); // Outputs: 10
+
+//Memoize
+const memoize = (fn) => {
+  let cache = {};
+
+  return function (n) {
+    if (cache[n]) {
+      // '', undefined, false, 0
+      return cache[n];
+    } else {
+      const result = fn(n);
+      cache[n] = result;
+      return result;
+    }
   };
-  
-  const memoisedFunc = memoize(calc);
+};
 
+const memoisedFunc = memoize(calc);
 
-  //Polyfill of promise
-  /**
+//Polyfill of promise
+/**
  *   Write the polyfill of promise APIs or can create your own custom Promise APIs.
  */
 
@@ -210,3 +217,66 @@ promise
   .finally(() => {
     console.log("Data fetching has been done succesfully!!");
   });
+
+// DEEP COPY
+/**
+ * Performs a deep copy of an object or array.
+ *
+ * @param {Object|Array} obj - The object or array to be copied.
+ * @returns {Object|Array} - A deep copy of the input object or array.
+ *
+ * @throws Will throw an error if the input is not an object or array.
+ *
+ * @example
+ * const originalObj = { name: 'John', age: 30, hobbies: ['reading', 'painting'] };
+ * const copiedObj = deepCopy(originalObj);
+ * console.log(copiedObj); // { name: 'John', age: 30, hobbies: ['reading', 'painting'] }
+ *
+ * @example
+ * const originalArr = [1, 2, 3, { name: 'John', age: 30 }];
+ * const copiedArr = deepCopy(originalArr);
+ * console.log(copiedArr); // [1, 2, 3, { name: 'John', age: 30 }]
+ */
+
+function deepClone(obj) {
+  if (obj === null || typeof obj !== "object") {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(deepClone);
+  }
+
+  const copy = {};
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      copy[key] = deepClone(obj[key]);
+    }
+  }
+  return copy;
+}
+
+const original = { a: 1, b: { c: 2 } };
+const deepCopy = deepClone(original);
+
+console.log(deepCopy); // { a: 1, b: { c: 2 } }
+deepCopy.b.c = 3;
+console.log(original.b.c); // 2, because `b` is not a reference
+
+function createCounter() {
+  let count = 0; // This is the private variable
+
+  return function () {
+    count += 1;
+    return count;
+  };
+}
+
+const counter1 = createCounter();
+const counter2 = createCounter();
+
+console.log(counter1()); // Outputs: 1
+console.log(counter1()); // Outputs: 2
+console.log(counter2()); // Outputs: 1
+console.log(counter2()); // Outputs: 2
+console.log(counter1()); // Outputs: 3

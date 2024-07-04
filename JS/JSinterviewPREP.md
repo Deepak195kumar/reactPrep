@@ -30,15 +30,16 @@ When you use JavaScript, local variables are variables that are defined within f
 
 ## this
 
--> `JavaScript this keyword always holds the reference to a single object, which defines the current line of code’s execution context which means this keyword refers to the object that is currently executing the code`
--> The value that this store is the current execution context(GEC or FEC) of the JavaScript program
+-> `JavaScript `this` keyword always holds the reference to a single object, which defines the current line of code’s execution context which means this keyword refers to the object that is currently executing the code`
+-> The value that `this` store is the current execution context(GEC or FEC) of the JavaScript program
 ->Thus, when used inside a function this value will change depending on how that function is defined, how it is invoked, and the default execution context. this keyword will refer to different objects depending on how it is used
 -> When this keyword is used in global scope this is set to window object.
 
 1. this alone : refers to the global object.
-2. this in function : the global object is the default binding for this.
+2. this in normal function : the global object is the default binding for this.
 3. this in strict mode : in strict mode, this is undefined.
-4. this in event handlers
+4. this in event handlers // refers to the element that received the event.
+5. Explicit Binding- You can explicitly set the value of this using call, apply, or bind.
 
 ## Prototype
 
@@ -74,7 +75,7 @@ Function.prototype.myCall = function(scope,...args){ //this line spread will be 
 scope.\_this=this;
 return scope.\_this(...args)
 }
-`we are inserting the calling function into the object itself so that this can Worker;`
+`we are inserting the calling function into the object itself so that this can Work;`
 
 Function.prototype.myBind = function (scope, ...args) {
 scope.\_this = this;
@@ -110,8 +111,11 @@ return flattened
 
 const arr = ['1', "hello", 20.3, 4];
 const splicedArr = arr.splice(1,2);  
-console.log(splicedArr);//['hello',20.3] //second index is included but in slice[o/p:'hello'] it won't include
-console.log(arr); //['1',4] //modify the actual array but in slice it won't modify as it create shallow cpy
+console.log(splicedArr);//['hello',20.3] //second index is included
+console.log(arr); //['1',4] it will modify the array - splice
+
+but in slice[o/p:'hello'] it won't include
+// in slice it won't modify as it create shallow cpy
 
 ## Function
 
@@ -130,7 +134,7 @@ console.log(arr); //['1',4] //modify the actual array but in slice it won't modi
 -> Function behaves as an object
 
 4. HOF (Higher Order Function): `take functions as a params and return the function.`
-   Important built-in HOF of an array: 1. forEach() : used to trave array elements; 2. map() 3. filter() 4. reduce(): return you a single value iterating over the array of element based the function passed in it. 5. sort()
+   Important built-in HOF of an array: 1. forEach() : used to traverse array elements; 2. map() 3. filter() 4. reduce(): return you a single value iterating over the array of element based the function passed in it. 5. sort()
 5. callback: `a callback is a function that is passed as an argument in an another function`
 
 ## flat
@@ -170,3 +174,13 @@ The place an item got invoked (or called) is not necessarily the item's lexical 
 ## Async and Await
 
 async and await are features introduced in ES2017 (ES8) to handle asynchronous code in a more synchronous manner, making it easier to work with promises. async is used to define a function that returns a promise, while await is used to pause the execution of an async function until a promise is resolved or rejected, allowing asynchronous code to be written in a synchronous-like style.
+
+# JavaScript, strings are immutable. This means once a string is created, it cannot be changed. Any operations that modify a string, such as concatenation, slicing, or replacing characters, will create a new string rather than modifying the original string.
+
+let str = "hello";
+str[0] = "H"; // This will not change the string
+console.log(str); // Outputs "hello"
+
+let newStr = str.replace("h", "H");
+console.log(newStr); // Outputs "Hello"
+console.log(str); // Outputs "hello"

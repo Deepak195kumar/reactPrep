@@ -1,5 +1,7 @@
 ## Lifecycle methods are an integral part of React class components. They allow you to execute code at specific points during the component's lifecycle, such as when the component is mounted, updated, or unmounted. However, with the introduction of React Hooks, the concept of lifecycle methods is less prevalent in functional components.
 
+diffing and reconciliation
+
 Here are the main lifecycle methods in React class components, along with their purpose:
 
 ## 1.constructor():
@@ -56,7 +58,7 @@ Remember that with the introduction of React Hooks, many of these lifecycle meth
 --useEffect() is asynchronous and doesn't guarantee that the effect will run immediately after the component is rendered.
 --It's used for side effects that don't require synchronously updated UI, such as data fetching, event listeners, or subscriptions.
 
-## 2.useLayoutEffect():
+## 2.useLayoutEffect(): asked this in one of the interview.
 
 --useLayoutEffect() is similar to useEffect(), but it runs synchronously after all DOM mutations.
 --It's useful when you need to perform DOM measurements or other imperative actions that need to be reflected immediately before the browser paints.
@@ -80,9 +82,9 @@ useEffect(() => {
 ## Effect Cleanup -- We do this by including a return function at the end of the useEffect Hook.
 
 <!-- useEffect(() => {
-    let timer = setTimeout(() => {
-        setCount((count) => count + 1);
-    }  , 1000);
+        let timer = setTimeout(() => {
+            setCount((count) => count + 1);
+        }  , 1000);
 
-return () => clearTimeout(timer)
+    return () => clearTimeout(timer)
 }, []); -->

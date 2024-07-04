@@ -21,4 +21,6 @@ Centralized store - this is simply a state object that denotes the entire applic
 
 ## Redux operates simply:
 
-Action is dispatched to the reducer, which updates the centralized store with the data based on the action used. The store will create a new state and send the updated data to the view, which is being rerendered in order to show the update.
+Action is dispatched to the reducer, which updates the centralized store with the data based on the action used.
+The store will create a new state and send the updated data to the view,
+which is being rerendered in order to show the update.

@@ -15,7 +15,6 @@ export default function App() {
     fetch(`https://demo.dataverse.org/api/search?q=${inputData}`)
       .then((response) => response.json()) //   or use explicit return if u use braces   .then((response) =>{return response.json())}    //cahining
       .then((response) => {
-        console.log(response.data);
         setData(response.data);
       });
   };

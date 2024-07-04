@@ -1,2 +1,8 @@
 what ES6 features u have used?
 difference between map and foreach?
+
+
+webpack
+msal
+google-maps hook
+redux

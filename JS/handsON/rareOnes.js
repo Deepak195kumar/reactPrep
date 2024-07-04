@@ -1,24 +1,3 @@
-const arrNum = [1, 2, 8, 2, 9, 8];
-
-// find duplicate elements in array
-const dup = arrNum.filter((ele, ind, arr) => arr.indexOf(ele) !== ind);
-console.log(dup); // return an array which contains duplicate elements -- [2,8]
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
-
-// find max/min in a given array
-Math.min(1, 2, 3); // 1
-
-Math.min(arrNum); // NaN   //That is because Math.min or Math.max functions expect distinct variables and not an array.so we can use spread operator and destructure here
-console.log(Math.min(...arrNum)); //1
-console.log(Math.max(...arrNum)); //9
-
-// we can do it by using reducer function as well --for min
-const ans = arrNum.reduce((prev, curr) => {
-  return prev > curr ? curr : prev;
-});
-console.log(ans);
-
 //--------------------------------------------------------------------------------------------------
 
 // Implement the function dataFinder such that :
